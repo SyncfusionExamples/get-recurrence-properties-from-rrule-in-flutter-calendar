@@ -12,13 +12,11 @@ class GetRecurrenceRule extends StatefulWidget {
 }
 
 class _GetRecurrenceRuleState extends State<GetRecurrenceRule> {
-  String _recurrenceRule;
+  String _recurrenceRule = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE;UNTIL=20210810';
   DateTime _startTime = DateTime.now();
 
   @override
   void initState() {
-    _startTime = DateTime.now();
-    _recurrenceRule = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE;UNTIL=20210810';
     super.initState();
   }
 
@@ -36,9 +34,9 @@ class _GetRecurrenceRuleState extends State<GetRecurrenceRule> {
             ),
             Expanded(
                 child: SfCalendar(
-              view: CalendarView.month,
-              dataSource: _getCalendarDataSource(),
-            ))
+                  view: CalendarView.month,
+                  dataSource: _getCalendarDataSource(),
+                ))
           ],
         ),
       ),
@@ -47,64 +45,65 @@ class _GetRecurrenceRuleState extends State<GetRecurrenceRule> {
 
   _showDialog() async {
     RecurrenceProperties _recurrenceProperties =
-        SfCalendar.parseRRule(_recurrenceRule, _startTime);
+    SfCalendar.parseRRule(_recurrenceRule, _startTime);
 
     await showDialog(
       context: context,
       // ignore: deprecated_member_use
-      child: new AlertDialog(
-        contentPadding: const EdgeInsets.all(16.0),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Type:' + _recurrenceProperties.recurrenceType.toString(),
-            ),
-            Text(
-              'Count:' + _recurrenceProperties.recurrenceCount.toString(),
-            ),
-            Text(
-              'StartDate:' + _recurrenceProperties.startDate.toString(),
-            ),
-            Text(
-              'EndDate:' + _recurrenceProperties.endDate.toString(),
-            ),
-            Text(
-              'Interval: ' + _recurrenceProperties.interval.toString(),
-            ),
-            Text(
-              'Range:' + _recurrenceProperties.recurrenceRange.toString(),
-            ),
-            Text(
-              'WeekDays:' + _recurrenceProperties.weekDays.toString(),
-            ),
-            Text(
-              'Week:' + _recurrenceProperties.week.toString(),
-            ),
-            Text(
-              'DayOfMonth:' + _recurrenceProperties.dayOfMonth.toString(),
-            ),
-            Text(
-              'DayOfWeek:' + _recurrenceProperties.dayOfWeek.toString(),
-            ),
-            Text(
-              'Month:' + _recurrenceProperties.month.toString(),
-            ),
-          ],
-        ),
-        actions: <Widget>[
-          new FlatButton(
-              child: const Text('CANCEL'),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          new FlatButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.pop(context);
-              })
-        ],
-      ),
+
+       builder: (BuildContext context) {return AlertDialog(
+         contentPadding: const EdgeInsets.all(16.0),
+         content: Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+           children: [
+             Text(
+               'Type:' + _recurrenceProperties.recurrenceType.toString(),
+             ),
+             Text(
+               'Count:' + _recurrenceProperties.recurrenceCount.toString(),
+             ),
+             Text(
+               'StartDate:' + _recurrenceProperties.startDate.toString(),
+             ),
+             Text(
+               'EndDate:' + _recurrenceProperties.endDate.toString(),
+             ),
+             Text(
+               'Interval: ' + _recurrenceProperties.interval.toString(),
+             ),
+             Text(
+               'Range:' + _recurrenceProperties.recurrenceRange.toString(),
+             ),
+             Text(
+               'WeekDays:' + _recurrenceProperties.weekDays.toString(),
+             ),
+             Text(
+               'Week:' + _recurrenceProperties.week.toString(),
+             ),
+             Text(
+               'DayOfMonth:' + _recurrenceProperties.dayOfMonth.toString(),
+             ),
+             Text(
+               'DayOfWeek:' + _recurrenceProperties.dayOfWeek.toString(),
+             ),
+             Text(
+               'Month:' + _recurrenceProperties.month.toString(),
+             ),
+           ],
+         ),
+         actions: <Widget>[
+           new FlatButton(
+               child: const Text('CANCEL'),
+               onPressed: () {
+                 Navigator.pop(context);
+               }),
+           new FlatButton(
+               child: const Text('OK'),
+               onPressed: () {
+                 Navigator.pop(context);
+               })
+         ],
+       );},
     );
   }
 
