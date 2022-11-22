@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 void main() {
-  runApp(new MaterialApp(
-      debugShowCheckedModeBanner: false, home: new GetRecurrenceRule()));
+  runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false, home: GetRecurrenceRule()));
 }
 
 class GetRecurrenceRule extends StatefulWidget {
+  const GetRecurrenceRule({super.key});
+
   @override
-  _GetRecurrenceRuleState createState() => new _GetRecurrenceRuleState();
+  _GetRecurrenceRuleState createState() => _GetRecurrenceRuleState();
 }
 
 class _GetRecurrenceRuleState extends State<GetRecurrenceRule> {
-  String _recurrenceRule = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE;UNTIL=20210810';
-  DateTime _startTime = DateTime.now();
+  final String _recurrenceRule = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE;UNTIL=20250810';
+  final DateTime _startTime = DateTime.now();
 
   @override
   void initState() {
@@ -22,14 +24,14 @@ class _GetRecurrenceRuleState extends State<GetRecurrenceRule> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             Center(
-              child: new RaisedButton(
+              child: TextButton(
                 onPressed: _showDialog,
-                child: new Text("Get recurrence rule"),
+                child: const Text("Get recurrence rule"),
               ),
             ),
             Expanded(
@@ -44,66 +46,66 @@ class _GetRecurrenceRuleState extends State<GetRecurrenceRule> {
   }
 
   _showDialog() async {
-    RecurrenceProperties _recurrenceProperties =
+    RecurrenceProperties recurrenceProperties =
     SfCalendar.parseRRule(_recurrenceRule, _startTime);
 
     await showDialog(
       context: context,
       // ignore: deprecated_member_use
 
-       builder: (BuildContext context) {return AlertDialog(
-         contentPadding: const EdgeInsets.all(16.0),
-         content: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: [
-             Text(
-               'Type:' + _recurrenceProperties.recurrenceType.toString(),
-             ),
-             Text(
-               'Count:' + _recurrenceProperties.recurrenceCount.toString(),
-             ),
-             Text(
-               'StartDate:' + _recurrenceProperties.startDate.toString(),
-             ),
-             Text(
-               'EndDate:' + _recurrenceProperties.endDate.toString(),
-             ),
-             Text(
-               'Interval: ' + _recurrenceProperties.interval.toString(),
-             ),
-             Text(
-               'Range:' + _recurrenceProperties.recurrenceRange.toString(),
-             ),
-             Text(
-               'WeekDays:' + _recurrenceProperties.weekDays.toString(),
-             ),
-             Text(
-               'Week:' + _recurrenceProperties.week.toString(),
-             ),
-             Text(
-               'DayOfMonth:' + _recurrenceProperties.dayOfMonth.toString(),
-             ),
-             Text(
-               'DayOfWeek:' + _recurrenceProperties.dayOfWeek.toString(),
-             ),
-             Text(
-               'Month:' + _recurrenceProperties.month.toString(),
-             ),
-           ],
-         ),
-         actions: <Widget>[
-           new FlatButton(
-               child: const Text('CANCEL'),
-               onPressed: () {
-                 Navigator.pop(context);
-               }),
-           new FlatButton(
-               child: const Text('OK'),
-               onPressed: () {
-                 Navigator.pop(context);
-               })
-         ],
-       );},
+      builder: (BuildContext context) {return AlertDialog(
+        contentPadding: const EdgeInsets.all(16.0),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Type:${recurrenceProperties.recurrenceType}',
+            ),
+            Text(
+              'Count:${recurrenceProperties.recurrenceCount}',
+            ),
+            Text(
+              'StartDate:${recurrenceProperties.startDate}',
+            ),
+            Text(
+              'EndDate:${recurrenceProperties.endDate}',
+            ),
+            Text(
+              'Interval: ${recurrenceProperties.interval}',
+            ),
+            Text(
+              'Range:${recurrenceProperties.recurrenceRange}',
+            ),
+            Text(
+              'WeekDays:${recurrenceProperties.weekDays}',
+            ),
+            Text(
+              'Week:${recurrenceProperties.week}',
+            ),
+            Text(
+              'DayOfMonth:${recurrenceProperties.dayOfMonth}',
+            ),
+            Text(
+              'DayOfWeek:${recurrenceProperties.dayOfWeek}',
+            ),
+            Text(
+              'Month:${recurrenceProperties.month}',
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+              child: const Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.pop(context);
+              })
+        ],
+      );},
     );
   }
 
@@ -111,7 +113,7 @@ class _GetRecurrenceRuleState extends State<GetRecurrenceRule> {
     List<Appointment> appointments = <Appointment>[];
     appointments.add(Appointment(
         startTime: _startTime,
-        endTime: _startTime.add(Duration(hours: 1)),
+        endTime: _startTime.add(const Duration(hours: 1)),
         subject: 'Meeting',
         color: Colors.blue,
         recurrenceRule: _recurrenceRule));
